@@ -1,6 +1,5 @@
 import logging
 import os
-import string
 import sys
 import time
 from http import HTTPStatus
@@ -44,7 +43,7 @@ RESPONSE_NOT_DICT = 'Ответ API не является словарем'
 HOMEWORKS_NOT_LIST = 'Homeworks приходят не в виде списка'
 HOMEWORK_KEY_NOT_FOUND = 'В ответе API oтсутствует ожидаемый ключ {}'
 UNKNOWN_STATUS = 'Недокументированный статус работы: {}'
-HOMEWORK_UPDATE = ('Изменился статус проверки работы'
+HOMEWORK_UPDATE = ('Изменился статус проверки работы '
                    '"{homework_name}". {verdict}')
 TOKEN_NOT_FOUND = 'Отсутствует переменная окружения {}'
 
@@ -100,6 +99,7 @@ def check_response(response: dict) -> list:
     keys = ('homework_name', 'status')
     if not isinstance(response, dict):
         raise ResponseNotDictError(RESPONSE_NOT_DICT)
+        # raise TypeError(RESPONSE_NOT_DICT)
     try:
         homeworks = response['homeworks']
     except HomeworkKeyError:
@@ -111,7 +111,7 @@ def check_response(response: dict) -> list:
     return homeworks
 
 
-def parse_status(homework: dict) -> string:
+def parse_status(homework: dict) -> str:
     """Извлекает из информации о конкретной домашней работе статус этой работы.
     В случае успеха, функция возвращает подготовленную для отправки
     в Telegram строку, содержащую один из вердиктов словаря.
@@ -130,7 +130,7 @@ def check_tokens() -> bool:
     for TOKEN in TOKENS:
         if globals()[TOKEN] is None:
             exit_message = TOKEN_NOT_FOUND.format(TOKEN)
-            logger.critical(exit_message)
+            logging.critical(exit_message)
             response = False
     return response
 

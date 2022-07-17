@@ -26,13 +26,13 @@ class JSONDecodingError(Exception):
     pass
 
 
-class ResponseNotDictError(Exception):
+class ResponseNotDictError(TypeError):
     """Вызывается, если ответ API не является словарем."""
 
     pass
 
 
-class HomeworkNotListError(Exception):
+class HomeworkNotListError(TypeError):
     """Вызывается, если ответы представлены не в виде списка."""
 
     pass
@@ -44,7 +44,7 @@ class HomeworkKeyError(Exception):
     pass
 
 
-class UnknownStatusError(Exception):
+class UnknownStatusError(KeyError):
     """Вызывается, при недокументированном статусе домашней работы."""
 
     pass
