@@ -25,7 +25,6 @@ RETRY_TIME = 600
 ENDPOINT = 'https://practicum.yandex.ru/api/user_api/homework_statuses/'
 HEADERS = {'Authorization': f'OAuth {PRACTICUM_TOKEN}'}
 
-
 VERDICTS = {
     'approved': 'Работа проверена: ревьюеру всё понравилось. Ура!',
     'reviewing': 'Работа взята на проверку ревьюером.',
@@ -169,5 +168,4 @@ if __name__ == '__main__':
         format='%(asctime)s [%(levelname)s]  %(message)s',
         handlers=handlers
     )
-    logger = logging.getLogger(__name__)
     main()
