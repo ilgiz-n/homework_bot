@@ -48,11 +48,6 @@ HOMEWORK_UPDATE = ('Изменился статус проверки работ�
 TOKEN_NOT_FOUND = 'Отсутствует переменная окружения {}'
 
 
-streamHandler = logging.StreamHandler(stream=sys.stdout)
-fileHandler = logging.FileHandler('homework.log')
-handlers = [streamHandler, fileHandler]
-
-
 def send_message(bot: Bot, message: str) -> Message:
     """Отправляет сообщение в Telegram чат."""
     try:
@@ -166,6 +161,9 @@ def main() -> Any:
 
 
 if __name__ == '__main__':
+    streamHandler = logging.StreamHandler(stream=sys.stdout)
+    fileHandler = logging.FileHandler('homework.log')
+    handlers = [streamHandler, fileHandler]
     logging.basicConfig(
         level=logging.DEBUG,
         format='%(asctime)s [%(levelname)s]  %(message)s',
