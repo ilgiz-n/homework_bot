@@ -99,7 +99,6 @@ def check_response(response: dict) -> list:
     keys = ('homework_name', 'status')
     if not isinstance(response, dict):
         raise ResponseNotDictError(RESPONSE_NOT_DICT)
-        # raise TypeError(RESPONSE_NOT_DICT)
     try:
         homeworks = response['homeworks']
     except HomeworkKeyError:
