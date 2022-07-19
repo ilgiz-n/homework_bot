@@ -32,7 +32,7 @@ VERDICTS = {
 }
 
 MESSAGING_INFO = 'Бот отправил сообщение: "{}"'
-MESSAGING_ERROR = 'Ошибка при отправке сообщения: {}'
+MESSAGING_ERROR = 'Ошибка отправки сообщения: {}'
 API_REQUEST_ERROR = ('Ошибка при запросе к основному API: {error}'
                      'endpoint: {url}, headers: {headers}, params: {params}')
 ENDPOINT_NOT_FOUND = ('ENDPOINT недоступен. Код состояния {status_code}, '
@@ -55,8 +55,8 @@ def send_message(bot: Bot, message: str) -> Message:
             text=message
         )
         logging.info(MESSAGING_INFO.format(message))
-    except MessagingError as error:
-        print(MESSAGING_ERROR.format(error))
+    except Exception as error:
+        raise MessagingError(MESSAGING_ERROR.format(error))
 
 
 def get_api_answer(current_timestamp: int) -> dict:
@@ -71,16 +71,17 @@ def get_api_answer(current_timestamp: int) -> dict:
         params={'from_date': timestamp})
     try:
         response = requests.get(**parameters)
-    except APIRequestError as error:
-        print(API_REQUEST_ERROR.format(error=error, **parameters))
+    except Exception as error:
+        raise APIRequestError(API_REQUEST_ERROR.format(
+            error=error, **parameters))
     if response.status_code != HTTPStatus.OK:
         status_code = response.status_code
         raise EndpointNotFoundError(ENDPOINT_NOT_FOUND.format(
             status_code=status_code, **parameters))
     try:
         return response.json()
-    except JSONDecodingError:
-        print(JSON_DECODING_ERROR)
+    except Exception as error:
+        raise JSONDecodingError(JSON_DECODING_ERROR.format(error))
 
 
 def check_response(response: dict) -> list:
@@ -95,10 +96,10 @@ def check_response(response: dict) -> list:
         raise ResponseNotDictError(RESPONSE_NOT_DICT)
     try:
         homeworks = response['homeworks']
-    except HomeworkKeyError:
+    except Exception:
         for key in keys:
             if key not in homeworks[0]:
-                print(HOMEWORK_KEY_NOT_FOUND.format(key))
+                raise HomeworkKeyError(HOMEWORK_KEY_NOT_FOUND.format(key))
     if not isinstance(homeworks, list):
         raise HomeworkNotListError(HOMEWORKS_NOT_LIST)
     return homeworks
