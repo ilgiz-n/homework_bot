@@ -1,7 +1,11 @@
-# Homework telegram bot
-The bot gets updates from Yandex Practicum API and sends messages via Telegram with homework status.
+# Телеграм бот для получения статуса проверки домашних заданий
 
-Features:
-- sending messages with homework status
-- logging the responses
+### Описание проекта:
+Бот получает обновления от Yandex Practicum API и отправляет сообщения в Telegram со статусом домашнего задания.
+
+### Как запустить проект:
+
+### Системные требования:
+- Python 3.7.3
+
 
