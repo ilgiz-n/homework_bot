@@ -44,13 +44,19 @@ python3 -m venv env
 ```
 
 ```
-source env/bin/activate
+source venv/bin/activate
 ```
 
 Установить зависимости из файла requirements.txt:
 
 ```
 pip install -r requirements.txt
+```
+
+Запустить исполнение кода
+
+```
+python homework.py
 ```
 
 ## Системные требования:
